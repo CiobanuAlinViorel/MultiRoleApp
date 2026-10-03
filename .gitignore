@@ -1,0 +1,150 @@
+# ===========================================
+# Root .gitignore: React (frontend) + Spring Boot (backend)
+# Assumes layout: /frontend and /backend
+# ===========================================
+
+# ---------- OS files ----------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ---------- IDEs / Editors ----------
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse / STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json.example
+
+# ---------- Environment / Secrets ----------
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+*.p12
+*.jks
+secrets/
+
+# Spring local config overrides (keep application.properties/yml committed)
+application-local.properties
+application-local.yml
+application-local.yaml
+application-secret*.properties
+application-secret*.yml
+
+# ---------- Logs ----------
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===========================================
+# Backend: Spring Boot (Maven / Gradle)
+# ===========================================
+
+# Maven
+backend/target/
+**/target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Gradle
+backend/build/
+**/build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/gradle-wrapper.jar
+
+# Compiled / packaged artifacts
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+
+# Local databases / uploads
+*.db
+*.sqlite
+*.mv.db
+*.trace.db
+backend/uploads/
+backend/data/
+
+# ===========================================
+# Frontend: React (CRA / Vite / Next-style)
+# ===========================================
+
+# Dependencies
+node_modules/
+frontend/node_modules/
+.pnp
+.pnp.js
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Build output
+frontend/build/
+frontend/dist/
+frontend/.next/
+frontend/out/
+
+# Testing / coverage
+coverage/
+frontend/coverage/
+.nyc_output/
+
+# Caches
+.eslintcache
+.parcel-cache/
+.cache/
+.vite/
+*.tsbuildinfo
+
+# Misc
+.npm
+.node_repl_history
+*.tgz
