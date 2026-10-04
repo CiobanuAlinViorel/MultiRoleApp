@@ -9,32 +9,26 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@NoArgsConstructor
+@Table(name = "actions")
 @Getter
 @Setter
-@Table(name = "credentials")
-public class Credential {
+@NoArgsConstructor
+public class Action {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false, unique = true, length = 50)
+    private String code;            // "view", "edit", "approve"
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @Column(name = "password_hash",  nullable = false)
-    private String passwordHash;
+    @Column(length = 255)
+    private String description;
 
     @Column(name="created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
     @Column(name="updated_at", nullable = false)
     private Instant updatedAt;
-
-    public Credential(String password) {
-        this.passwordHash = password;
-    }
 
     @PrePersist
     public void onCreate(){
@@ -47,5 +41,8 @@ public class Credential {
         this.updatedAt = Instant.now();
     }
 
-
+    public Action(String code, String description){
+        this.code = code;
+        this.description = description;
+    }
 }

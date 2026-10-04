@@ -1,16 +1,19 @@
-#admin db
+#  db
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/secu
-    username: alin     # least-privilege DB role, only has access to admin schema
-    password: alin123
+    url: ${DB_URL}
+    username: ${DB_USERNAME}   # least-privilege DB role, only has access to admin schema
+    password: ${DB_PASSWORD}
   jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
     properties:
       hibernate:
-        default_schema: admin  # all JPA queries/DDL go to admin schema
+        default_schema: ${DB_SCHEMA}  # all JPA queries/DDL go to THE schema
   flyway:
-    schemas: admin             # Flyway creates/owns this schema
-    default-schema: admin      # Flyway's own metadata table (flyway_schema_history) also lives here
+    schemas:  ${DB_SCHEMA}              # Flyway creates/owns this schema
+    default-schema:  ${DB_SCHEMA}       # flyway_schema_history also lives here
     locations:
       - classpath:db/migration
       - classpath:db/shared-migration

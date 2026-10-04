@@ -12,29 +12,26 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "credentials")
-public class Credential {
+@Table(name = "roles")
+public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @Column(nullable = false, unique = true, length = 100)
+    private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(length = 255)
+    private String description;
 
-    @Column(name = "password_hash",  nullable = false)
-    private String passwordHash;
+    @Column(nullable = false, name = "is_system")
+    private boolean isSystem;
 
     @Column(name="created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
     @Column(name="updated_at", nullable = false)
     private Instant updatedAt;
-
-    public Credential(String password) {
-        this.passwordHash = password;
-    }
 
     @PrePersist
     public void onCreate(){
@@ -47,5 +44,9 @@ public class Credential {
         this.updatedAt = Instant.now();
     }
 
-
+    public Role(String name, String description, boolean isSystem) {
+        this.name = name;
+        this.description = description;
+        this.isSystem = isSystem;
+    }
 }

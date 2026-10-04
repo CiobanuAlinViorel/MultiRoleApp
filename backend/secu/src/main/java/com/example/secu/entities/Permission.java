@@ -1,5 +1,4 @@
 package com.example.secu.entities;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,32 +8,37 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@NoArgsConstructor
+@Table(name = "actions")
 @Getter
 @Setter
-@Table(name = "credentials")
-public class Credential {
+@NoArgsConstructor
+public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "resource_type_id", nullable = false)
+    private ResourceType resourceType;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "action_id", nullable = false)
+    private Action action;
 
-    @Column(name = "password_hash",  nullable = false)
-    private String passwordHash;
+    @Column(nullable = false, unique = true, length = 120)
+    private String code;            // "invoice:approve"
+
+    public Permission(ResourceType resourceType, Action action) {
+        this.resourceType = resourceType;
+        this.action = action;
+        this.code = resourceType.getCode() + ":" + action.getCode();
+    }
 
     @Column(name="created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
     @Column(name="updated_at", nullable = false)
     private Instant updatedAt;
-
-    public Credential(String password) {
-        this.passwordHash = password;
-    }
 
     @PrePersist
     public void onCreate(){
@@ -46,6 +50,5 @@ public class Credential {
     public void onUpdate(){
         this.updatedAt = Instant.now();
     }
-
 
 }
